@@ -5,7 +5,7 @@ Manages email and push notifications.
 ## Running Locally
 
 ```bash
-./mvnw compile quarkus:dev
+mvn compile quarkus:dev
 ```
 
 ## Configuration

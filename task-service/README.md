@@ -5,7 +5,7 @@ Manages tasks and workflows.
 ## Running Locally
 
 ```bash
-./mvnw compile quarkus:dev
+mvn compile quarkus:dev
 ```
 
 ## Configuration

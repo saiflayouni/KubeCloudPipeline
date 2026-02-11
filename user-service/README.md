@@ -5,7 +5,7 @@ Handles user profiles and authentication.
 ## Running Locally
 
 ```bash
-./mvnw compile quarkus:dev
+mvn compile quarkus:dev
 ```
 
 ## Configuration

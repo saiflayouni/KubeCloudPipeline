@@ -17,6 +17,13 @@ The project consists of the following microservices:
 
 Each service is a standalone Quarkus application with its own Dockerfile and configuration.
 
+## Sprint-02 Recap (Completed)
+- **Microservice Implementation**: Developed the `task-service` using Quarkus.
+- **REST API**: Implemented full CRUD endpoints for Task management (`GET`, `POST`, `PUT`, `DELETE`).
+- **Data Storage**: Integrated in-memory storage using `ConcurrentHashMap` for thread-safe operations.
+- **Testing**: Added comprehensive unit tests with `QuarkusTest` and `RestAssured`, ensuring reliability and correct execution order.
+- **Documentation**: Auto-generated OpenAPI/Swagger documentation available at `/swagger-ui`.
+
 ## Git Workflow
 1.  **Main**: Production-ready code.
 2.  **Dev**: Integration branch for ongoing development.
@@ -27,8 +34,7 @@ Each service is a standalone Quarkus application with its own Dockerfile and con
 - Ensure CI checks pass (to be added).
 - Squash and merge.
 
-## Next Steps (Sprint-02)
-- Implement full REST API endpoints.
-- Add business logic and validation.
-- Integrate with a database (generic or specific per service).
-- Add unit and integration tests.
+## Next Steps (Sprint-03)
+- **CI/CD Pipeline**: Integrate with Google Cloud Build for automated testing and building.
+- **Service Containerization**: refine Dockerfiles for production.
+- **User Service Planning**: Begin architecture for `user-service` implementation.

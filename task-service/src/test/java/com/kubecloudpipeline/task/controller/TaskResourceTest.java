@@ -3,16 +3,21 @@ package com.kubecloudpipeline.task.controller;
 import com.kubecloudpipeline.task.model.Task;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
 @QuarkusTest
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class TaskResourceTest {
 
     @Test
+    @Order(1)
     void testGetAllTasks() {
         given()
           .when().get("/tasks")
@@ -22,6 +27,7 @@ class TaskResourceTest {
     }
 
     @Test
+    @Order(2)
     void testCreateAndGetTask() {
         Task newTask = new Task("Sprint Planning", "Plan Sprint-02 tasks");
 

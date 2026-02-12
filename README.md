@@ -38,3 +38,5 @@ Each service is a standalone Quarkus application with its own Dockerfile and con
 - **CI/CD Pipeline**: Integrate with Google Cloud Build for automated testing and building.
 - **Service Containerization**: refine Dockerfiles for production.
 - **User Service Planning**: Begin architecture for `user-service` implementation.
+
+# Verification Trigger

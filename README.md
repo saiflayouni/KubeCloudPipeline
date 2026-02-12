@@ -59,6 +59,15 @@ We follow a strict **Feature Branch Workflow**:
 | **05** | GKE Environment Setup | ✅ Completed | [View Doc](./docs/sprint-05-gke.md) |
 | **06** | Microservices Deployment | ✅ Completed | [View Doc](./docs/sprint-06-microservices.md) |
 | **07** | Ingress & Scaling | ✅ Completed | [View Doc](./docs/sprint-07-ingress.md) |
+| **08** | Monitoring & Observability | ✅ Completed | [View Doc](./docs/sprint-08-monitoring.md) |
+
+## 📊 Monitoring Strategy
+
+We utilize a Prometheus + Grafana stack for observability:
+
+- **Prometheus**: Scrapes `/q/metrics` from Quarkus pods every 15s.
+- **Grafana**: Visualizes CPU, memory, and HTTP throughput.
+- **MicroProfile Metrics**: SmallRye implementation used in Java code.
 
 ## 🚀 Deployment
 

@@ -1,0 +1,67 @@
+steps:
+  # 1. Build and Test the Task Service (Maven)
+  - name: 'maven:3.9-eclipse-temurin-17'
+    entrypoint: 'mvn'
+    args: ['clean', 'package', '-Dquarkus.package.type=uber-jar', '-f', 'task-service/pom.xml']
+    id: 'build-test'
+
+  # 2. Build Docker Image
+  - name: 'gcr.io/cloud-builders/docker'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        docker build -t us-central1-docker.pkg.dev/infra-earth-367100/kube-repo/task-service:$SHORT_SHA \
+                     -t us-central1-docker.pkg.dev/infra-earth-367100/kube-repo/task-service:latest \
+                     -f task-service/Dockerfile \
+                     task-service
+    id: 'docker-build'
+    waitFor: ['build-test']
+
+  # 3. Push Docker Image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-central1-docker.pkg.dev/infra-earth-367100/kube-repo/task-service:$SHORT_SHA']
+    id: 'docker-push-sha'
+    waitFor: ['docker-build']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-central1-docker.pkg.dev/infra-earth-367100/kube-repo/task-service:latest']
+    id: 'docker-push-latest'
+    waitFor: ['docker-build']
+
+  # 4. Deploy to GKE (Standard/Autopilot)
+  - name: 'gcr.io/cloud-builders/kubectl'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        # Configure kubectl to connect to the cluster
+        gcloud container clusters get-credentials kube-cloud-cluster --zone us-central1-a --project infra-earth-367100
+
+        # Determine namespace based on branch name
+        if [[ "$BRANCH_NAME" == "main" ]]; then
+          NAMESPACE="prod"
+        elif [[ "$BRANCH_NAME" == "dev" ]]; then
+          NAMESPACE="dev"
+        else
+          echo "Feature branch detected. Skipping deployment."
+          exit 0
+        fi
+
+        echo "Deploying to namespace: $NAMESPACE"
+
+        # Apply Kubernetes Manifests (substituting environment variables)
+        sed -e "s|GOOGLE_CLOUD_PROJECT|infra-earth-367100|g" \
+            -e "s|TAG_NAME|$SHORT_SHA|g" \
+            k8s/task-service/deployment.yaml | kubectl apply -n $NAMESPACE -f -
+
+        kubectl apply -n $NAMESPACE -f k8s/task-service/service.yaml
+    id: 'deploy-gke'
+    waitFor: ['docker-push-sha']
+
+images:
+  - 'us-central1-docker.pkg.dev/infra-earth-367100/kube-repo/task-service:$SHORT_SHA'
+  - 'us-central1-docker.pkg.dev/infra-earth-367100/kube-repo/task-service:latest'
+
+options:
+  logging: CLOUD_LOGGING_ONLY

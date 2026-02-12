@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: task-service
+  labels:
+    app: task-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: task-service
+  template:
+    metadata:
+      labels:
+        app: task-service
+    spec:
+      containers:
+      - name: task-service
+        image: us-central1-docker.pkg.dev/GOOGLE_CLOUD_PROJECT/kube-repo/task-service:TAG_NAME
+        ports:
+        - containerPort: 8081
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+        env:
+        - name: QUARKUS_HTTP_PORT
+          value: "8081"
+        readinessProbe:
+          httpGet:
+            path: /q/health/ready
+            port: 8081
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /q/health/live
+            port: 8081
+          initialDelaySeconds: 10
+          periodSeconds: 10

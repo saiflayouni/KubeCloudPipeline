@@ -13,6 +13,6 @@ data:
         metrics_path: '/q/metrics'
         static_configs:
           - targets: 
-            - 'task-service.dev-sprint7.svc.cluster.local:80'
-            - 'user-service.dev-sprint7.svc.cluster.local:80'
-            - 'notification-service.dev-sprint7.svc.cluster.local:80'
+            - 'task-service.dev-monitoring.svc.cluster.local:80'
+            - 'user-service.dev-monitoring.svc.cluster.local:80'
+            - 'notification-service.dev-monitoring.svc.cluster.local:80'

@@ -1,13 +1,33 @@
 # Notification Service
 
-Manages email and push notifications.
+Spring-boot/Quarkus microservice responsible for handling asynchronous alerts (Email/SMS).
 
-## Running Locally
+## 🔌 API Endpoints
 
+| Method | Path | Description |
+| :--- | :--- | :--- |
+| `POST` | `/notifications/email` | Send an email |
+| `GET` | `/notifications/health` | Service health check |
+
+## 🛠 Local Development
+
+### Prerequisites
+- Java 17+
+- Maven 3.8+
+- Docker
+
+### Build & Run
 ```bash
-mvn compile quarkus:dev
+# Debug Mode
+./mvnw compile quarkus:dev
+
+# Build JAR
+./mvnw clean package
 ```
 
-## Configuration
+## 🐳 Docker
 
-- Port: 8083
+```bash
+docker build -f notification-service/Dockerfile -t notification-service .
+docker run -p 8083:8083 notification-service
+```

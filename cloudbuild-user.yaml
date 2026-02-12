@@ -36,9 +36,11 @@ steps:
       - '-c'
       - |
         gcloud container clusters get-credentials kube-cloud-cluster --zone us-central1-a --project infra-earth-367100
-        
+
         if [[ "$BRANCH_NAME" == "main" ]]; then
           NAMESPACE="prod"
+        elif [[ "$BRANCH_NAME" == feature/sprint-07* ]]; then
+          NAMESPACE="dev-sprint7"
         elif [[ "$BRANCH_NAME" == "dev" ]]; then
           NAMESPACE="dev"
         else

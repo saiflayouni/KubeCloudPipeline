@@ -43,6 +43,8 @@ steps:
           NAMESPACE="prod"
         elif [[ "$BRANCH_NAME" == "dev" ]]; then
           NAMESPACE="dev"
+        elif [[ "$BRANCH_NAME" == "feature/sprint-08-monitoring" ]]; then
+          NAMESPACE="dev-monitoring"
         else
           echo "Feature branch detected. Skipping deployment."
           exit 0

@@ -39,7 +39,9 @@ steps:
 
         if [[ "$BRANCH_NAME" == "main" ]]; then
           NAMESPACE="prod"
-        elif [[ "$BRANCH_NAME" == feature/sprint-08* ]]; then NAMESPACE="dev-monitoring" elif [[ "$BRANCH_NAME" == feature/sprint-07* ]]; then
+        elif [[ "$BRANCH_NAME" == feature/sprint-08* ]]; then
+          NAMESPACE="dev-monitoring"
+        elif [[ "$BRANCH_NAME" == feature/sprint-07* ]]; then
           NAMESPACE="dev-sprint7"
         elif [[ "$BRANCH_NAME" == "dev" ]]; then
           NAMESPACE="dev"

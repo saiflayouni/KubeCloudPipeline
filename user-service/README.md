@@ -1,13 +1,35 @@
 # User Service
 
-Handles user profiles and authentication.
+Spring-boot/Quarkus microservice responsible for managing User profiles and identities.
 
-## Running Locally
+## 🔌 API Endpoints
 
+| Method | Path | Description |
+| :--- | :--- | :--- |
+| `GET` | `/users` | List all users |
+| `GET` | `/users/{id}` | Get user profile |
+| `POST` | `/users` | Create a new user |
+| `DELETE` | `/users/{id}` | Delete a user |
+
+## 🛠 Local Development
+
+### Prerequisites
+- Java 17+
+- Maven 3.8+
+- Docker
+
+### Build & Run
 ```bash
-mvn compile quarkus:dev
+# Debug Mode
+./mvnw compile quarkus:dev
+
+# Build JAR
+./mvnw clean package
 ```
 
-## Configuration
+## 🐳 Docker
 
-- Port: 8082
+```bash
+docker build -f user-service/Dockerfile -t user-service .
+docker run -p 8082:8082 user-service
+```

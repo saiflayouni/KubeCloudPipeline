@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notification-service
+  template:
+    metadata:
+      labels:
+        app: notification-service
+    spec:
+      containers:
+        - name: notification-service
+          image: us-central1-docker.pkg.dev/GOOGLE_CLOUD_PROJECT/kube-repo/notification-service:TAG_NAME
+          ports:
+            - containerPort: 8083
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "128Mi"
+            limits:
+              cpu: "100m"
+              memory: "256Mi"
+          # Health check probe
+          livenessProbe:
+            httpGet:
+              path: /q/health/live
+              port: 8083
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /q/health/ready
+              port: 8083
+            initialDelaySeconds: 5
+            periodSeconds: 10

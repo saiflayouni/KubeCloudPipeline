@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+        - name: user-service
+          image: us-central1-docker.pkg.dev/GOOGLE_CLOUD_PROJECT/kube-repo/user-service:TAG_NAME
+          ports:
+            - containerPort: 8082
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "128Mi"
+            limits:
+              cpu: "100m"
+              memory: "256Mi"
+          # Health check probe
+          livenessProbe:
+            httpGet:
+              path: /q/health/live
+              port: 8082
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /q/health/ready
+              port: 8082
+            initialDelaySeconds: 5
+            periodSeconds: 10

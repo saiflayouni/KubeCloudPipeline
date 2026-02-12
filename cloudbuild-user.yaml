@@ -53,8 +53,8 @@ steps:
         sed -i "s/GOOGLE_CLOUD_PROJECT/infra-earth-367100/g" k8s/user-service/deployment.yaml.tmp
 
         # Apply
-        kubectl apply -f k8s/user-service/deployment.yaml.tmp -n $NAMESPACE
-        kubectl apply -f k8s/user-service/service.yaml -n $NAMESPACE
+        kubectl apply -f k8s/user-service/deployment.yaml.tmp -n $$NAMESPACE
+        kubectl apply -f k8s/user-service/service.yaml -n $$NAMESPACE
     id: 'deploy-gke'
     waitFor: ['docker-push-sha', 'docker-push-latest']
 

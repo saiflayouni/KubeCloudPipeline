@@ -48,14 +48,14 @@ steps:
           exit 0
         fi
 
-        echo "Deploying to namespace: $NAMESPACE"
+        echo "Deploying to namespace: $$NAMESPACE"
 
         # Apply Kubernetes Manifests (substituting environment variables)
         sed -e "s|GOOGLE_CLOUD_PROJECT|infra-earth-367100|g" \
             -e "s|TAG_NAME|$SHORT_SHA|g" \
-            k8s/task-service/deployment.yaml | kubectl apply -n $NAMESPACE -f -
+            k8s/task-service/deployment.yaml | kubectl apply -n $$NAMESPACE -f -
 
-        kubectl apply -n $NAMESPACE -f k8s/task-service/service.yaml
+        kubectl apply -n $$NAMESPACE -f k8s/task-service/service.yaml
     id: 'deploy-gke'
     waitFor: ['docker-push-sha']
 

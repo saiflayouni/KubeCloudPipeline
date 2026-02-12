@@ -2,7 +2,7 @@ steps:
   # 1. Build and Test the Task Service (Maven)
   - name: 'maven:3.9-eclipse-temurin-17'
     entrypoint: 'mvn'
-    args: ['clean', 'package', '-Dquarkus.package.type=uber-jar', '-f', 'task-service/pom.xml']
+    args: ['clean', 'package', '-f', 'task-service/pom.xml']
     id: 'build-test'
 
   # 2. Build Docker Image

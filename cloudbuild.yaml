@@ -2,7 +2,7 @@ steps:
   # 1. Build and Test the Task Service (Maven)
   - name: 'maven:3.9-eclipse-temurin-17'
     entrypoint: 'mvn'
-    args: ['clean', 'package', '-f', 'task-service/pom.xml']
+    args: ['clean', 'package', '-Dquarkus.package.type=fast-jar', '-f', 'task-service/pom.xml']
     id: 'build-test'
 
   # 2. Build Docker Image
@@ -11,6 +11,9 @@ steps:
     args:
       - '-c'
       - |
+        echo "Listing target directory for debugging:"
+        ls -R task-service/target
+
         docker build -t us-central1-docker.pkg.dev/infra-earth-367100/kube-repo/task-service:$SHORT_SHA \
                      -t us-central1-docker.pkg.dev/infra-earth-367100/kube-repo/task-service:latest \
                      -f task-service/Dockerfile \
